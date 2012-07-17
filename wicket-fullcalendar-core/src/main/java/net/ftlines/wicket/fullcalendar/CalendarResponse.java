@@ -51,6 +51,10 @@ public class CalendarResponse {
 		return execute(q("removeEvents"), q(event.getId()));
 	}
 
+	public CalendarResponse removeAllEvents() {
+		return execute(q("removeEvents"));
+	}
+
 	public CalendarResponse gotoDate(Date date) {
 		return execute(q("gotoDate"), "new Date(" + date.getTime() + ")");
 	}
@@ -81,6 +85,15 @@ public class CalendarResponse {
 	 */
 	public CalendarResponse clearSelection() {
 		return execute(q("unselect"));
+	}
+
+	public CalendarResponse changeView(ViewType viewType) {
+		return execute(q("changeView"), q(viewType.getCode()));
+	}
+
+	public CalendarResponse select(Date start, Date end, boolean allDay) {
+		return execute(q("select"), "new Date(" + start.getTime() + ")", "new Date(" + end.getTime() + ")",
+			String.valueOf(allDay));
 	}
 
 }

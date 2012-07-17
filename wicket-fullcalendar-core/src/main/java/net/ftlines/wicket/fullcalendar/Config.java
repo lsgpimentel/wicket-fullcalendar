@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,10 @@ public class Config implements Serializable {
 	/** Use these to specify calendar column formats */
 	public static enum ColumnFormat {
 		day, week, month;
+	}
+
+	public static enum TitleFormat {
+		day, week, month
 	}
 
 	private List<EventSource> eventSources = new ArrayList<EventSource>();
@@ -47,7 +52,10 @@ public class Config implements Serializable {
 	private String select;
 	private String defaultView;
 	@JsonProperty
-	private Map<ColumnFormat, String> columnFormat = new HashMap<Config.ColumnFormat, String>();
+	private Map<ColumnFormat, String> columnFormat = new HashMap<ColumnFormat, String>();
+
+	@JsonProperty
+	private Map<TitleFormat, String> titleFormat = new HashMap<TitleFormat, String>();
 
 	private LocalTime minTime;
 	private LocalTime maxTime;
@@ -63,6 +71,19 @@ public class Config implements Serializable {
 	private Integer slotMinutes;
 	private Float aspectRatio;
 	private boolean ignoreTimezone = false;
+
+	private List<String> monthNames = new LinkedList<String>();
+	private List<String> monthNamesShort = new LinkedList<String>();
+	private List<String> dayNames = new LinkedList<String>();
+	private List<String> dayNamesShort = new LinkedList<String>();
+
+	private Integer firstDay;
+
+	private Boolean theme;
+
+	private String axisFormat;
+
+	private String weekMode;
 
 	public Config add(EventSource eventSource) {
 		eventSources.add(eventSource);
@@ -189,6 +210,33 @@ public class Config implements Serializable {
 
 	public void setColumnFormatMonth(String format) {
 		columnFormat.put(ColumnFormat.month, format);
+	}
+
+	@JsonIgnore
+	public String getTitleFormatDay() {
+		return titleFormat.get(TitleFormat.day);
+	}
+
+	public void setTitleFormatDay(String format) {
+		titleFormat.put(TitleFormat.day, format);
+	}
+
+	@JsonIgnore
+	public String getTitleFormatWeek() {
+		return titleFormat.get(TitleFormat.week);
+	}
+
+	public void setTitleFormatWeek(String format) {
+		titleFormat.put(TitleFormat.week, format);
+	}
+
+	@JsonIgnore
+	public String getTitleFormatMonth() {
+		return titleFormat.get(TitleFormat.month);
+	}
+
+	public void setTitleFormatMonth(String format) {
+		titleFormat.put(TitleFormat.month, format);
 	}
 
 	public ButtonText getButtonText() {
@@ -324,6 +372,126 @@ public class Config implements Serializable {
 	@JsonIgnore
 	public boolean isIgnoreTimezone() {
 		return ignoreTimezone;
+	}
+
+	/**
+	 * @return the monthNames
+	 */
+	public List<String> getMonthNames() {
+		return Collections.unmodifiableList(monthNames);
+	}
+
+	/**
+	 * @param monthNames
+	 *            the monthNames to set
+	 */
+	public void setMonthNames(List<String> monthNames) {
+		this.monthNames = monthNames;
+	}
+
+	/**
+	 * @return the monthNamesShort
+	 */
+	public List<String> getMonthNamesShort() {
+		return monthNamesShort;
+	}
+
+	/**
+	 * @param monthNamesShort
+	 *            the monthNamesShort to set
+	 */
+	public void setMonthNamesShort(List<String> monthNamesShort) {
+		this.monthNamesShort = monthNamesShort;
+	}
+
+	/**
+	 * @return the dayNames
+	 */
+	public List<String> getDayNames() {
+		return dayNames;
+	}
+
+	/**
+	 * @param dayNames
+	 *            the dayNames to set
+	 */
+	public void setDayNames(List<String> dayNames) {
+		this.dayNames = dayNames;
+	}
+
+	/**
+	 * @return the dayNamesShort
+	 */
+	public List<String> getDayNamesShort() {
+		return dayNamesShort;
+	}
+
+	/**
+	 * @param dayNamesShort
+	 *            the dayNamesShort to set
+	 */
+	public void setDayNamesShort(List<String> dayNamesShort) {
+		this.dayNamesShort = dayNamesShort;
+	}
+
+	/**
+	 * @return the theme
+	 */
+	public Boolean getTheme() {
+		return theme;
+	}
+
+	/**
+	 * @param theme
+	 *            the theme to set
+	 */
+	public void setTheme(Boolean theme) {
+		this.theme = theme;
+	}
+
+	/**
+	 * @return the firstDay
+	 */
+	public Integer getFirstDay() {
+		return firstDay;
+	}
+
+	/**
+	 * @param firstDay
+	 *            the firstDay to set
+	 */
+	public void setFirstDay(Integer firstDay) {
+		this.firstDay = firstDay;
+	}
+
+	/**
+	 * @return the axisFormat
+	 */
+	public String getAxisFormat() {
+		return axisFormat;
+	}
+
+	/**
+	 * @param axisFormat
+	 *            the axisFormat to set
+	 */
+	public void setAxisFormat(String axisFormat) {
+		this.axisFormat = axisFormat;
+	}
+
+	/**
+	 * @return the weekMode
+	 */
+	public String getWeekMode() {
+		return weekMode;
+	}
+
+	/**
+	 * @param weekMode
+	 *            the weekMode to set
+	 */
+	public void setWeekMode(String weekMode) {
+		this.weekMode = weekMode;
 	}
 
 }

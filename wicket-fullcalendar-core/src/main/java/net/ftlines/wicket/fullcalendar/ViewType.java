@@ -31,4 +31,11 @@ public enum ViewType {
 		throw new IllegalStateException("Invalid view type code: " + code);
 	}
 
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
 }
